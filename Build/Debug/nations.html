@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+<title>The Wealth of Nations</title>
+<style>
+@font-face { font-family: 'Lato'; font-style: normal; font-weight: 400; src: url(lato.ttf) format('truetype'); }
+svg { font: 9px 'Lato', Arial, sans-serif; }
+.center { margin-left: auto; margin-right: auto; width: 600px; }
+</style>
+</head>
+<body>
+<br/><br/>
+<div class="center" style="position: relative;">
+<svg id="chart" width="600" height="500" />
+<script src="d3.v3.js"></script>
+<script src="grapher.js"></script>
+<link rel="stylesheet" type="text/css" href="grapher.css" />
+<script>
+d3.json("nations.json", function(data) {
+	var chart = new Grapher.MotionChart(document.getElementById("chart"));
+	chart.dataSource = data;
+	chart.labelData = "name";
+	chart.xData = "income";
+	chart.yData = "lifeExpectancy";
+	chart.radiusData = "population";
+	chart.colorData = "region";
+	chart.xScale = d3.scale.log();
+	chart.xAxis.ticks(8, d3.format(","));
+	chart.startTime = new Date("1820/1/1");
+	chart.endTime = new Date("2007/12/31");
+	chart.select("China");
+	chart.select("India");
+	chart.select("United States");
+	chart.select("Germany");
+	chart.draw();
+});
+</script>
+</div>
+</body>
+</html>
