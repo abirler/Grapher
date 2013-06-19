@@ -41,8 +41,10 @@ module Grapher
     {
       this._element = d3.select(element);
       this._margin = { top: 20, right: 20, bottom: 80, left: 40 };
-      this._width = this._element.attr("width") - this._margin.right - this._margin.left;
-      this._height = this._element.attr("height") - this._margin.top - this._margin.bottom;
+      var width: number = parseFloat(this._element.attr("width"));
+      var height: number = parseFloat(this._element.attr("height"));
+      this._width = width - this._margin.right - this._margin.left;
+      this._height = height - this._margin.top - this._margin.bottom;
 
       this.xScale = d3.scale.linear();
       this.yScale = d3.scale.linear();
@@ -273,8 +275,9 @@ module Grapher
 
     private createTimeSlider()
     {
+      var width: number = parseFloat(this._element.attr("width"));
       var w: number = this._width * (this._colorDomain ? 0.32 : 0.64);
-      var x: number = this._element.attr("width") - this._margin.right - w;
+      var x: number = width - this._margin.right - w;
       var y: number = Number(this._element.attr("height")) - 30;
 
       this._timeScale = d3.time.scale().domain([ this._startTime, this._endTime ]).range([0, w]).clamp(true);;

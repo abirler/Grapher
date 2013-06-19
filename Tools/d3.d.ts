@@ -3,7 +3,7 @@
 // Definitions by: TypeScript samples
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-module D3 {
+declare module D3 {
     interface Selectors {
         /**
         * Select an element from the current document
@@ -47,6 +47,9 @@ module D3 {
         * Constructs a new drag behaviour
         */
         drag: () => Drag;
+        /**
+        * Constructs a new zoom behaviour
+        */
         zoom: () => Zoom;
     }
 
@@ -187,6 +190,7 @@ module D3 {
         sourceEvent: Event;
         x: number;
         y: number;
+        altKey: any;
     }
 
     interface Base extends Selectors {
@@ -228,7 +232,9 @@ module D3 {
         * @param arr Array to search
         * @param map Accsessor function
         */
-        max: (arr: number[], map?: (v: any) => any) => number;
+        max: (arr: any[], map?: (v: any) => number) => number;
+        
+        
         /**
         * Find the minimum and maximum value in an array
         *
@@ -299,101 +305,416 @@ module D3 {
         bisector(accessor: (data: any, index: number) => any): any;
         /**
         * Randomize the order of an array.
+        *
+        * @param arr Array to randomise
         */
         shuffle(arr: any[]): any[];
         /**
         * Reorder an array of elements according to an array of indexes
+        *
+        * @param arr Array to reorder
+        * @param indexes Array containing the order the elements should be returned in
         */
         permute(arr: any[], indexes: any[]): any[];
         /**
         * Transpose a variable number of arrays.
+        *
+        * @param arrs Arrays to transpose
         */
         zip(...arrs: any[]): any[];
         /**
         * Transpose an array of arrays.
+        *
+        * @param matrix Two dimensional array to transpose
         */
         transpose(matrix: any[]): any[];
         /**
         * List the keys of an associative array.
+        *
+        * @param map Array of objects to get the key values from
         */
         keys(map: any[]): any[];
         /**
         * List the values of an associative array.
+        *
+        * @param map Array of objects to get the values from
         */
         values(map: any[]): any[];
         /**
         * List the key-value entries of an associative array.
+        *
+        * @param map Array of objects to get the key-value pairs from
         */
         entries(map: any[]): any[];
         /**
         * merge multiple arrays into one array
+        *
+        * @param map Arrays to merge
         */
         merge(...map: any[]): any[];
         /**
         * Generate a range of numeric values.
         */
-        range: (start: number, stop?: number, step?: number) => number[];
+        range: {
+            /**
+            * Generate a range of numeric values from 0.
+            *
+            * @param stop Value to generate the range to
+            * @param step Step between each value
+            */
+            (stop: number, step?: number): number[];
+            /**
+            * Generate a range of numeric values.
+            *
+            * @param start Value to start
+            * @param stop Value to generate the range to
+            * @param step Step between each value
+            */
+            (start: number, stop?: number, step?: number): number[];
+        };
         /**
-        * Group array elements hierarchically.
+        * Create new nest operator
         */
         nest(): Nest;
 
-        // Loading resources
+        /**
+        * Request a resource using XMLHttpRequest.
+        */
         xhr: {
-            (url: string, callback: (xhr: XMLHttpRequest) => void ): void;
-            (url: string, mime: string, callback: (xhr: XMLHttpRequest) => void ): void;
+            /**
+            * Creates an asynchronous request for specified url
+            *
+            * @param url Url to request
+            * @param callback Function to invoke when resource is loaded or the request fails
+            */
+            (url: string, callback?: (xhr: XMLHttpRequest) => void ): Xhr;
+            /**
+            * Creates an asynchronous request for specified url
+            *
+            * @param url Url to request
+            * @param mime MIME type to request
+            * @param callback Function to invoke when resource is loaded or the request fails
+            */
+            (url: string, mime: string, callback?: (xhr: XMLHttpRequest) => void ): Xhr;
         };
+        /**
+        * Request a text file
+        */
         text: {
-            (url: string, callback: (response: string) => void ): void;
-            (url: string, mime: string, callback: (response: string) => void ): void;
+            /**
+            * Request a text file
+            *
+            * @param url Url to request
+            * @param callback Function to invoke when resource is loaded or the request fails
+            */
+            (url: string, callback?: (response: string) => void ): Xhr;
+            /**
+            * Request a text file
+            *
+            * @param url Url to request
+            * @param mime MIME type to request
+            * @param callback Function to invoke when resource is loaded or the request fails
+            */
+            (url: string, mime: string, callback?: (response: string) => void ): Xhr;
         };
-        json: (url: string, callback: (response: any) => void ) => void;
+        /**
+        * Request a JSON blob
+        *
+        * @param url Url to request
+        * @param callback Function to invoke when resource is loaded or the request fails
+        */
+        json: (url: string, callback?: (response: any) => void ) => Xhr;
+        /**
+        * Request an HTML document fragment.
+        */
         xml: {
-            (url: string, callback: (response: Document) => void ): void;
-            (url: string, mime: string, callback: (response: Document) => void ): void;
+            /**
+            * Request an HTML document fragment.
+            *
+            * @param url Url to request
+            * @param callback Function to invoke when resource is loaded or the request fails
+            */
+            (url: string, callback?: (response: Document) => void ): Xhr;
+            /**
+            * Request an HTML document fragment.
+            *
+            * @param url Url to request
+            * @param mime MIME type to request
+            * @param callback Function to invoke when resource is loaded or the request fails
+            */
+            (url: string, mime: string, callback?: (response: Document) => void ): Xhr;
         };
-        html: (url: string, callback: (response: DocumentFragment) => void ) => void;
+        /**
+        * Request an XML document fragment.
+        * 
+        * @param url Url to request
+        * @param callback Function to invoke when resource is loaded or the request fails
+        */
+        html: (url: string, callback?: (response: DocumentFragment) => void ) => Xhr;
+        /**
+        * Request a comma-separated values (CSV) file.
+        */
         csv: {
-            (url: string, callback: (error: any, response: any[]) => void );
+            /**
+            * Request a comma-separated values (CSV) file.
+            * 
+            * @param url Url to request
+            * @param callback Function to invoke when resource is loaded or the request fails
+            */
+            (url: string, callback?: (error: any, response: any[]) => void ): Xhr;
+            /**
+            * Parse a CSV string into objects using the header row.
+            *
+            * @param string CSV formatted string to parse
+            */
             parse(string: string): any[];
+            /**
+            * Parse a CSV string into tuples, ignoring the header row.
+            * 
+            * @param string CSV formatted string to parse
+            */
             parseRows(string: string, accessor: (row: any[], index: number) => any): any;
+            /**
+            * Format an array of tuples into a CSV string.
+            *
+            * @param rows Array to convert to a CSV string
+            */
             format(rows: any[]): string;
         };
+        /**
+        * Request a tab-separated values (TSV) file
+        */
         tsv: {
-            (url: string, callback: (error: any, response: any[]) => void );
+            /**
+            * Request a tab-separated values (TSV) file
+            * 
+            * @param url Url to request
+            * @param callback Function to invoke when resource is loaded or the request fails
+            */
+            (url: string, callback?: (error: any, response: any[]) => void ): Xhr;
+            /**
+            * Parse a TSV string into objects using the header row.
+            *
+            * @param string TSV formatted string to parse
+            */
             parse(string: string): any[];
+            /**
+            * Parse a TSV string into tuples, ignoring the header row.
+            * 
+            * @param string TSV formatted string to parse
+            */
             parseRows(string: string, accessor: (row: any[], index: number) => any): any;
+            /**
+            * Format an array of tuples into a TSV string.
+            *
+            * @param rows Array to convert to a TSV string
+            */
             format(rows: any[]): string;
         };
 
+        /**
+        * Time Functions
+        */
         time: Time;
+
+        /**
+        * Scales
+        */
         scale: {
-
-            // TODO
-            sqrt(): any;
-
+            /**
+            * Construct a linear quantitative scale.
+            */
             linear(): LinearScale;
+            sqrt(): LinearScale;
+            /*
+            * Construct an ordinal scale.
+            */
             ordinal(): OrdinalScale;
+            /**
+            * Construct a linear quantitative scale with a discrete output range.
+            */
             quantize(): QuantizeScale;
+            /*
+            * Construct an ordinal scale with ten categorical colors.
+            */
             category10(): OrdinalScale;
+            /*
+            * Construct an ordinal scale with twenty categorical colors
+            */
             category20(): OrdinalScale;
+            /*
+            * Construct an ordinal scale with twenty categorical colors
+            */
             category20b(): OrdinalScale;
+            /*
+            * Construct an ordinal scale with twenty categorical colors
+            */
             category20c(): OrdinalScale;
         };
+        /*
+        * Interpolate two values
+        */
         interpolate: BaseInterpolate;
+        /*
+        * Interpolate two numbers
+        */
         interpolateNumber: BaseInterpolate;
+        /*
+        * Interpolate two integers
+        */
         interpolateRound: BaseInterpolate;
+        /*
+        * Interpolate two strings
+        */
         interpolateString: BaseInterpolate;
+        /*
+        * Interpolate two RGB colours
+        */
         interpolateRgb: BaseInterpolate;
+        /*
+        * Interpolate two HSL colours
+        */
         interpolateHsl: BaseInterpolate;
+        /*
+        * Interpolate two arrays of values
+        */
         interpolateArray: BaseInterpolate;
+        /*
+        * Interpolate two arbitary objects
+        */
         interpolateObject: BaseInterpolate;
+        /*
+        * Interpolate two 2D matrix transforms
+        */
         interpolateTransform: BaseInterpolate;
+
+        /**
+        * Layouts
+        */
         layout: Layout;
+
+        /**
+        * Svg's
+        */
         svg: Svg;
+
+        /**
+        * Random number generators
+        */
         random: Random;
 
+        /**
+        * Create a function to format a number as a string
+        *
+        * @param specifier The format specifier to use
+        */
         format(specifier: string): (value: number) => string;
+    }
+
+    interface Xhr {
+        /**
+        * Get or set request header
+        */
+        header: {
+            /**
+            * Get the value of specified request header
+            *
+            * @param name Name of header to get the value for
+            */
+            (name: string): string;
+            /**
+            * Set the value of specified request header
+            *
+            * @param name Name of header to set the value for
+            * @param value Value to set the header to
+            */
+            (name: string, value: string): Xhr;
+        };
+        /**
+        * Get or set MIME Type
+        */
+        mimeType: {
+            /**
+            * Get the current MIME Type
+            */
+            (): string;
+            /**
+            * Set the MIME Type for the request
+            * 
+            * @param type The MIME type for the request
+            */
+            (type: string): Xhr;
+        };
+        /*
+        * Get or Set the function used to map the response to the associated data value
+        */
+        response: {
+            /**
+            * Get function used to map the response to the associated data value
+            */
+            (): (xhr: XMLHttpRequest) => any;
+            /**
+            * Set function used to map the response to the associated data value
+            * 
+            * @param value The function used to map the response to a data value
+            */
+            (value: (xhr: XMLHttpRequest) => any ): Xhr;
+        };
+        /**
+        * Issue the request using the GET method
+        *
+        * @param callback Function to invoke on completion of request
+        */
+        get (callback?: (xhr: XMLHttpRequest) => void ): Xhr;
+        /**
+        * Issue the request using the POST method
+        */
+        post: {
+            /**
+            * Issue the request using the POST method
+            *
+            * @param callback Function to invoke on completion of request
+            */
+            (callback?: (xhr: XMLHttpRequest) => void ): Xhr;
+            /**
+            * Issue the request using the POST method
+            *
+            * @param data Data to post back in the request
+            * @param callback Function to invoke on completion of request
+            */
+            (data: any, callback?: (xhr: XMLHttpRequest) => void ): Xhr;
+        };
+        /**
+        * Issues this request using the specified method
+        */
+        send: {
+            /**
+            * Issues this request using the specified method
+            *
+            * @param method Method to use to make the request
+            * @param callback Function to invoke on completion of request
+            */
+            (method: string, callback?: (xhr: XMLHttpRequest) => void ): Xhr;
+            /**
+            * Issues this request using the specified method
+            *
+            * @param method Method to use to make the request
+            * @param data Data to post back in the request
+            * @param callback Function to invoke on completion of request
+            */
+            (method: string, data: any, callback?: (xhr: XMLHttpRequest) => void ): Xhr;
+        };
+        /**
+        * Aborts this request, if it is currently in-flight
+        */
+        abort(): Xhr;
+        /**
+        * Registers a listener to receive events
+        *
+        * @param type Enent name to attach the listener to
+        * @param listener Function to attach to event
+        */
+        on: (type: string, listener: (data: any, index?: number) => any) => Xhr;
     }
 
     interface Selection extends Selectors {
@@ -493,17 +814,24 @@ module D3 {
             (name: string, value: any): Transition;
             (name: string, valueFunction: (data: any, index: number) => any): Transition;
         };
+
+        style: {
+            (name: string): string;
+            (name: string, value: any, priority?: string): Transition;
+            (name: string, valueFunction: (data: any, index: number) => any, priority?: string): Transition;
+        };
+
+        tween(name: string, callback): Transition;
+
         call(callback: (selection: Selection) => void ): Transition;
 
         select: (selector: string) => Transition;
         selectAll: (selector: string) => Transition;
 
-        // TODO
-        ease(name: string): Transition;
-        // TODO
-        tween(name: string, any): Transition;
-        // TODO
-        each(name: string, any): Transition;
+        each: (type?: string, eachFunction?: (data: any, index: number) => any) => Transition;
+        transition: () => Transition;
+        ease: (value: string, ...arrs: any[]) => Transition;
+        remove: () => Transition;
     }
 
     interface Nest {
@@ -582,13 +910,16 @@ module D3 {
             (values: any[]): Scale;
             (): any[];
         };
-        copy: Scale;
+        copy(): Scale;
     }
 
     interface LinearScale extends Scale {
         (value: number): number;
         invert(value: number): number;
-        domain(numbers: any[]): LinearScale;
+        domain: {
+            (values: any[]): LinearScale;
+            (): any[];
+        };
         range: {
             (values: any[]): LinearScale;
             (): any[];
@@ -602,7 +933,7 @@ module D3 {
         nice(): LinearScale;
         ticks(count: number): any[];
         tickFormat(count: number): (n: number) => string;
-        copy: LinearScale;
+        copy(): LinearScale;
     }
 
     interface OrdinalScale extends Scale {
@@ -620,7 +951,7 @@ module D3 {
         rangeRoundBands(interval: any[], padding?: number, outerPadding?: number): OrdinalScale;
         rangeBand(): number;
         rangeExtent(): any[];
-        copy: OrdinalScale;
+        copy(): OrdinalScale;
     }
 
     interface QuantizeScale extends Scale {
@@ -633,13 +964,16 @@ module D3 {
             (values: any[]): QuantizeScale;
             (): any[];
         };
-        copy: QuantizeScale;
+        copy(): QuantizeScale;
     }
 
     interface TimeScale extends Scale {
         (value: Date): number;
         invert(value: number): Date;
-        domain(numbers: any[]): TimeScale;
+        domain: {
+            (values: any[]): TimeScale;
+            (): any[];
+        };
         range: {
             (values: any[]): TimeScale;
             (): any[];
@@ -672,6 +1006,8 @@ module D3 {
     interface Layout {
         stack(): StackLayout;
         pie(): PieLayout;
+        force(): ForceLayout;
+        tree(): TreeLayout;
     }
 
     interface StackLayout {
@@ -714,6 +1050,31 @@ module D3 {
         size: (number) => Symbol;
     }
 
+
+
+    interface ProjectionPoint
+    {
+        x: number;
+        y: number;
+    }
+
+    interface Projector
+    {
+        (d: ProjectionPoint): ProjectionPoint;
+    }
+
+    interface Diagonal
+    {
+        (): () => Diagonal;
+        (projectionPoint):  Diagonal;
+        projection:
+        {
+            (projector): Diagonal;
+            (): Projector;
+        };
+
+    }
+
     interface Svg {
         /**
         * Create a new symbol generator
@@ -735,6 +1096,11 @@ module D3 {
         * Create a new area generator
         */
         area(): Area;
+        /**
+        * Constructs a new diagonal generator with the default accessor functions
+        */
+        diagonal(): Diagonal;
+
     }
 
     interface Axis {
@@ -1043,6 +1409,167 @@ module D3 {
         */
         irwinHall(count: number): () => number;
     }
+    
+    // force layout definitions
+    export interface TwoDGraphPoint {
+        id: number;
+        index: number;
+        name: string;
+        px: number;
+        py: number;
+        size: number;
+        weight: number;
+        x: number;
+        y: number;
+        x0: number;
+        y0: number;
+    }
+
+    export interface LayoutNode extends TwoDGraphPoint {
+        fixed: bool;
+        parent: LayoutNode;
+        depth: number;
+        children: LayoutNode[];
+        _children: LayoutNode[];
+    }
+
+    export interface LayoutLink {
+        source: LayoutNode;
+        target: LayoutNode;
+    }
+
+
+    export interface ForceLayout {
+        (): ForceLayout;
+        size: {
+            (): number;
+            (mysize: number[]): ForceLayout;
+            (accessor: (d: any, index: number) => {}): ForceLayout;
+
+        };
+
+        linkDistance: {
+            (): number;
+            (number): ForceLayout;
+            (accessor: (d: any, index: number) => number): ForceLayout;
+        };
+
+        linkStrength:
+            {
+                (): number;
+                (number): ForceLayout;
+                (accessor: (d: any, index: number) => number): ForceLayout;
+            };
+
+        friction:
+        {
+            (): number;
+            (number): ForceLayout;
+            (accessor: (d: any, index: number) => number): ForceLayout;
+        };
+
+
+        alpha: {
+            (): number;
+            (number): ForceLayout;
+            (accessor: (d: any, index: number) => number): ForceLayout;
+        };
+        charge: {
+            (): number;
+            (number): ForceLayout;
+            (accessor: (d: any, index: number) => number): ForceLayout;
+        };
+
+        theta: {
+            (): number;
+            (number): ForceLayout;
+            (accessor: (d: any, index: number) => number): ForceLayout;
+        };
+
+        gravity: {
+            (): number;
+            (number): ForceLayout;
+            (accessor: (d: any, index: number) => number): ForceLayout;
+        };
+
+        links: {
+            (): LayoutLink[];
+            (arLinks: LayoutLink[]): ForceLayout;
+
+        };
+        nodes:
+        {
+            (): LayoutNode[];
+            (arNodes: LayoutNode[]): ForceLayout;
+
+        };
+        start(): ForceLayout;
+        resume(): ForceLayout;
+        stop(): ForceLayout;
+        tick(): ForceLayout;
+        on(type: string, listener: () => void ): ForceLayout;
+        drag(): ForceLayout;
+    }
+
+ // tree layout
+    
+
+    interface Comparator
+    {
+        (a: LayoutNode, b: LayoutNode): () => any;
+
+    }
+
+    interface ObjectWithChildrenArray
+    {
+        children: ObjectWithChildrenArray[];
+    }
+
+    interface ChildrenAccessorFunction
+    {
+        (d: ObjectWithChildrenArray): ()=> any;
+    }
+
+    interface CalculateSeparation
+    {
+        (a: any, b: any): () => number;
+
+    }
+
+
+    export interface TreeLayout
+    {
+        (): TreeLayout;
+        size: {
+            (): number;
+            (mysize: number[]): TreeLayout;
+            (accessor: (d: any, index: number) => {}): TreeLayout;
+
+        };
+        nodes: (LayoutNode) => LayoutNode[];
+        links: (nodes: LayoutNode[]) => LayoutLink[];
+
+
+        sort:
+            {
+                (): () => Comparator;
+                (Comparator): (comp) => Comparator;
+            };
+
+
+        children:
+            {
+                (): () => ChildrenAccessorFunction;
+                (ObjectWithChildrenArray): () => ObjectWithChildrenArray;
+            };
+        separation:
+        {
+            (): CalculateSeparation;
+            (CalculateSeparation): () => number;
+
+        };
+    }
+
 }
 
 declare var d3: D3.Base;
