@@ -211,9 +211,11 @@ var Grapher;
         MotionChart.prototype.createRules = function () {
             var rules = this._diagram.append("g").classed("rules", true);
 
+            // x & y axis
             rules.append("g").classed("axis", true).attr("transform", "translate(0," + this._height + ")").call(this.xAxis.tickSize(2, 0, 2));
             rules.append("g").classed("axis", true).call(this.yAxis.tickSize(2, 0, 2));
 
+            // grid lines
             rules.append("g").classed("grid", true).attr("transform", "translate(0," + this._height + ")").call(this.xAxis.tickSize(-this._height, 0, -this._height).tickFormat(function (value) {
                 return "";
             }));
@@ -224,6 +226,7 @@ var Grapher;
                 return d == 0;
             }).classed("origin", true);
 
+            // add axis labels
             rules.append("text").attr("text-anchor", "end").attr("x", this._width - 3).attr("y", this._height - 6).text(this._xData);
             rules.append("text").attr("text-anchor", "end").attr("x", "-3").attr("y", 11).attr("transform", "rotate(-90)").text(this._yData);
         };

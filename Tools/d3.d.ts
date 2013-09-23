@@ -769,7 +769,7 @@ declare module D3 {
         };
 
         filter: {
-            (filter: (data: any, index: number) => bool): UpdateSelection;
+            (filter: (data: any, index: number) => boolean): UpdateSelection;
             (filter: string): UpdateSelection;
         };
 
@@ -777,7 +777,7 @@ declare module D3 {
         each(eachFunction: (data: any, index: number) => any): Selection;
         on: {
             (type: string): (data: any, index: number) => any;
-            (type: string, listener: (data: any, index: number) => any, capture?: bool): Selection;
+            (type: string, listener: (data: any, index: number) => any, capture?: boolean): Selection;
         };
 
         transition: () => Transition;
@@ -790,7 +790,7 @@ declare module D3 {
         append: (name: string) => Selection;
         insert: (name: string, before: string) => Selection;
         select: (selector: string) => Selection;
-        empty: () => bool;
+        empty: () => boolean;
         node: () => Node;
     }
 
@@ -929,7 +929,7 @@ declare module D3 {
             (): Interpolate;
             (factory: Interpolate): LinearScale;
         };
-        clamp(clamp: bool): LinearScale;
+        clamp(clamp: boolean): LinearScale;
         nice(): LinearScale;
         ticks(count: number): any[];
         tickFormat(count: number): (n: number) => string;
@@ -983,7 +983,7 @@ declare module D3 {
             (): Interpolate;
             (factory: InterpolateFactory): TimeScale;
         };
-        clamp(clamp: bool): TimeScale;
+        clamp(clamp: boolean): TimeScale;
         ticks: {
             (count: number): any[];
             (range: Range, count: number): any[];
@@ -1426,7 +1426,7 @@ declare module D3 {
     }
 
     export interface LayoutNode extends TwoDGraphPoint {
-        fixed: bool;
+        fixed: boolean;
         parent: LayoutNode;
         depth: number;
         children: LayoutNode[];

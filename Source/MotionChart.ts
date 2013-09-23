@@ -31,7 +31,7 @@ module Grapher
     private _endTime: Date;
     private _currentTime: Date;
     private _timeScale: D3.TimeScale;
-    private _timeSliderDragged: bool;
+    private _timeSliderDragged: boolean;
     private _timeSlider: D3.Selection;
     private _timeSliderHead: D3.Selection;
     private _timeSliderPosition: D3.Selection;
@@ -384,7 +384,7 @@ module Grapher
     { 
       var self = this;
 
-      var hasValue: bool = true;
+      var hasValue: boolean = true;
       self._dataSource.forEach(function (item)
       {
         hasValue = hasValue && (item[axis] instanceof Array) || (typeof item[axis] == "number");
@@ -459,7 +459,7 @@ module Grapher
       this._endTime = endTime;
     }
 
-    private hasValue(item: any, axis: string, date: Date): bool
+    private hasValue(item: any, axis: string, date: Date): boolean
     {
       var data = item[axis];
       if ((typeof data == "number") || (typeof data == "string"))
