@@ -186,8 +186,7 @@ var Grapher;
                     { "stop": 0.33, "color": "#2ff076" },
                     { "stop": 0.5, "color": "#d0ff2f" },
                     { "stop": 0.66, "color": "#ffff2f" },
-                    { "stop": 1.0, "color": "#ff2f2f" }
-                ];
+                    { "stop": 1.0, "color": "#ff2f2f" }];
 
                 var linearGradient = this._element.append("defs").append("linearGradient").attr("id", "colorGradient").attr("x2", "1");
                 gradient.forEach(function (d) {
@@ -385,6 +384,7 @@ var Grapher;
             });
 
             self._dataSource.forEach(function (item) {
+                // Convert time series into a multi-value D3 scale and cache time range.
                 if (item[axis] instanceof Array) {
                     var dates = item[axis].map(function (d) {
                         return d[0];
